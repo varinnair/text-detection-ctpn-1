@@ -21,7 +21,7 @@ def resize_im(im, scale, max_scale=None):
 
 
 def draw_boxes(img,image_name,boxes,scale):
-    base_name = image_name.split('/')[-1]
+    base_name = image_name.split('\\')[-1]
     with open('data/results/' + 'res_{}.txt'.format(base_name.split('.')[0]), 'w') as f:
         for box in boxes:
             if np.linalg.norm(box[0] - box[1]) < 5 or np.linalg.norm(box[3] - box[0]) < 5:
@@ -49,7 +49,6 @@ def draw_boxes(img,image_name,boxes,scale):
 def ctpn(sess, net, image_name):
     timer = Timer()
     timer.tic()
-
     img = cv2.imread(image_name)
     img, scale = resize_im(img, scale=TextLineCfg.SCALE, max_scale=TextLineCfg.MAX_SCALE)
     scores, boxes = test_ctpn(sess, net, img)
